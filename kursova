@@ -1,0 +1,219 @@
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import static java.lang.Math.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+
+public class kursak11 {
+	//Масив, що вміщає заголовки таблиці А
+    Object[] headersA = { "Column 1", "Column 2", "Column 3" };
+    //Масив, що вміщає заголовки таблиці В
+    Object[] headersB = { "Column 1", "Column 2", "Column 3", "Column 4" };
+    //Масив, що вміщає заголовки перетвореної таблиці А
+    Object[] headersANew = { "Column 1", "Column 2", "Column 3", "Column 4"};
+    //Масив, що вміщає заголовки перетвореної таблиці В 
+    Object[] headersBNew = { "Column 1", "Column 2", "Column 3", "Column 4" };
+    //Масив, що вміщає заголовки результуючої таблиці С
+    Object[] headersC = { "Column 1", "Column 2", "Column 3", "Column 4" };
+    
+     //Масив, що вміщає данні таблиці А
+    Object[][]  dataA = {
+        { 1, 1, 1 },
+        { 2, 2, 2 },
+        { 3, 3, 3 },
+        { 4, 4, 4 },
+        
+    };
+  //Масив, що вміщає данні таблиці B
+    Object[][] dataB = {
+        { 1, 1, 1, 1 },
+        { 2, 2, 2, 2  },
+        { 3, 3, 3, 3 },
+                
+    };
+    
+     //Масив, що вміщає данні перетвореної таблиці А
+    Object [] [] dataANew= new Object[3] [4]; 
+    int i, j; {
+    for(i=0; i<3; i++) 
+    for (j=0; j<4; j++){
+    dataANew[i] [j] = (int)(dataA [j] [i])*2; 
+       System.out.print(dataANew[i] [j]);
+    	}
+     }
+    
+  //Масив, що вміщає данні перетвореної таблиці B
+    Object [] [] dataBNew= new Object[3] [4]; 
+    int k, m; {
+    for(k=0; k<3; k++) 
+    for (m=0; m<4; m++){
+    dataBNew[k] [m] =pow((int) dataB [k] [m],4); 
+      }
+    }
+    
+//Масив, що вміщає данні таблиці C
+    Object [] [] dataC= new Object[3] [4]; 
+    int f, g; {
+    for(f=0; f<3; f++) 
+    for (g=0; g<4; g++){
+    dataC[f] [g] = (int) dataANew [f] [g]+ (double) dataBNew [f] [g]; 
+      }
+        }
+    
+//Знаходимо значення максимального елементу в матриці С
+    int  p,l; 
+    double max;
+    {
+    max=(double) dataC[1] [1]; 
+    for(p=0; p<3; p++) 
+    for (l=0; l<4; l++){
+    	if ((double) dataC[p][l]>max) max=(double) dataC[p][l];
+        		
+    }
+      }
+    
+  //Знаходимо значення Добуток елементів парних стовпчиків С
+    int  w,n; 
+    double dob=1;
+    {
+       for(w=0; w<3; ++w) 
+    for (n=1; n<4; n=n+2){
+    	dob=(double) dataC[w][n]*dob;
+        		
+    }
+      }
+   
+    //Об'єкт таблиці А
+    JTable jTabA;
+    //Об'єкт таблиці B
+    JTable jTabB;
+    //Об'єкт таблиці АNew
+    JTable jTabANew;
+    //Об'єкт таблиці BNew
+    JTable jTabBNew;
+    //Об'єкт таблиці C
+    JTable jTabC;
+    
+ 
+    kursak11() {
+        //Створюємо новий контейнер JFrame
+        JFrame jfrm = new JFrame("JTableKursak");
+        //Встановлюємо диспетчер компановки
+        jfrm.getContentPane().setLayout(new	GridLayout(3,2));
+        //Встановлюємо розмір вікна (форми)
+        jfrm.setSize(900, 600);
+        //Встановлюємо завершення програми при закритті програми
+        jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //Відображаємо контейнер
+        jfrm.setVisible(true);
+        
+        //Створюємо таблицю А на основі двохвимірного масиву даних та заголовків
+        jTabA = new JTable(dataA, headersA);
+        //Створюємо панель прокрутки та включаємо в її склад нашу таблицю
+        JScrollPane jscrlpA = new JScrollPane(jTabA);
+        //Встановлюємо розміри області прокруткии
+        jTabA.setPreferredScrollableViewportSize(new Dimension(250, 100));
+        //Додаємо в контейнер панель прокрутки і таблицю разом з нею
+        jfrm.getContentPane().add(jscrlpA);
+        
+        
+      //Створюємо таблицю B на основі двохвимірного масиву даних та заголовків
+        jTabB = new JTable(dataB, headersB);
+        //Створюємо панель прокрутки та включаємо в її склад нашу таблицю
+        JScrollPane jscrlpB = new JScrollPane(jTabB);
+        //Встановлюємо розміри області прокруткии
+        jTabB.setPreferredScrollableViewportSize(new Dimension(250, 100));
+        //Додаємо в контейнер панель прокрутки і таблицю разом з нею
+        jfrm.getContentPane().add(jscrlpB);
+        
+        
+        //Створюємо перетворену таблицю А на основі двохвимірного масиву даних та заголовків
+        jTabANew = new JTable(dataANew, headersANew);
+        //Створюємо панель прокрутки та включаємо в її склад нашу таблицю
+        JScrollPane jscrlpANew = new JScrollPane(jTabANew);
+        //Встановлюємо розміри області прокруткии
+        jTabANew.setPreferredScrollableViewportSize(new Dimension(250, 100));
+        //Додаємо в контейнер панель прокрутки і таблицю разом з нею
+        jfrm.getContentPane().add(jscrlpANew);
+        
+        
+      //Створюємо перетворену таблицю B на основі двохвимірного масиву даних та заголовків
+        jTabBNew = new JTable(dataBNew, headersBNew);
+        //Створюємо панель прокрутки та включаємо в її склад нашу таблицю
+        JScrollPane jscrlpBNew = new JScrollPane(jTabBNew);
+        //Встановлюємо розміри області прокруткии
+        jTabBNew.setPreferredScrollableViewportSize(new Dimension(250, 100));
+        //Додаємо в контейнер панель прокрутки і таблицю разом з нею
+        jfrm.getContentPane().add(jscrlpBNew);
+        
+        
+      //Створюємо результуючу таблицю С 
+        jTabC = new JTable(dataC, headersC);
+        //Створюємо панель прокрутки та включаємо в її склад нашу таблицю
+        JScrollPane jscrlpC = new JScrollPane(jTabC);
+        //Встановлюємо розміри області прокруткии
+        jTabC.setPreferredScrollableViewportSize(new Dimension(250, 100));
+        //Додаємо в контейнер панель прокрутки і таблицю разом з нею
+        jfrm.getContentPane().add(jscrlpC);
+        
+        
+        JButton button = new JButton("Рохрахувати");
+      //створюємо об'єкт  надпис
+      JLabel label = new JLabel("Мінімальне значення матриці С");	
+      	//створюємо об'єкт текстове поле 
+      JTextField text = new JTextField("              ");
+      JLabel label2 = new JLabel("Добуток парних стловпчиків матриці С");	
+    	//створюємо об'єкт текстове поле 
+    JTextField text2 = new JTextField("                                               ");
+
+        FlowLayout F1 = new FlowLayout();
+        JPanel panel = new JPanel(F1);
+    	//встановлюємо границі панелі та задаємо вигляд панелі
+    panel.setBorder(BorderFactory.createEtchedBorder());
+    	//додаємо об'єкти надпис, текст та кнопка на панель
+    panel.add(label);
+    panel.add(text);
+    panel.add(button);
+    panel.add(label2);
+    panel.add(text2);
+    
+    	//на форму розміщуємо першу панель
+    jfrm.getContentPane().add(panel);
+     
+     //додаємо обробник подій для кнопки 
+    //в якості параметра створюється екземпляр класу ActionListener
+    button.addActionListener(new ActionListener() {
+    //реалізація анонімного класу ActionListener
+    	@Override
+    	public void actionPerformed(ActionEvent e) {
+    		//при натисканні на кнопку виконується метод actionPerformed
+    		    		//виводимо результат пошуку даних в матриці С
+    		text.setText(""+ max);
+    		text2.setText(""+ dob);
+    	}
+    });
+    }
+    
+    
+    //Функція main, Що запускається при старті додатка
+    public static void main(String[] args) {
+        //Створюємо фрейм в потоці обробки подій
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new kursak11();
+            }
+        });
+    }
+}
